@@ -1,0 +1,29 @@
+# Server configuration
+# Defines the port on which this application will run
+server:
+  port: 8080
+
+spring:
+  application:
+    # Name of the Spring Boot application
+    # Used for service identification in logs, discovery, and monitoring
+    name: circuit-breaker
+
+management:
+  endpoints:
+    web:
+      exposure:
+        # Exposes all actuator endpoints over HTTP
+        # Useful for monitoring, metrics, health checks, etc.
+        include: "*"
+  endpoint:
+    health:
+      # Shows full health details instead of a simple UP/DOWN status
+      # Commonly used in development and debugging
+      show-details: always
+
+services:
+  order-service:
+    # Base URL of the Order Service
+    # This application will call this endpoint (e.g., via RestTemplate/WebClient)
+    url: http://localhost:8081/api/create-order
