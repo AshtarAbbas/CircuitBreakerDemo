@@ -4,6 +4,7 @@ import com.spring_boot.circuit_breaker.response.OrderResponse;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -87,6 +88,10 @@ public class CircuitBreakerService {
         fallbackResponse.setStatus(errorMessage);
 
         // Return a 200 OK or 503 Service Unavailable depending on your API design requirements
-        return ResponseEntity.ok(fallbackResponse);
+
+        return ResponseEntity
+                .status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(fallbackResponse);
+
     }
 }
